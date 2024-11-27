@@ -1,0 +1,51 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators import gzip
+from django.http import StreamingHttpResponse
+from ultralytics import YOLO
+import cv2
+
+def view_tasks(request):
+    return StreamingHttpResponse(
+        gen(VideoStream('tasks/view_tasks/nn/models/yolov8s.pt',0.5,0,256)),
+         content_type="multipart/x-mixed-replace;boundary=frame")
+
+
+class VideoStream:
+    def __init__(self,path:str,conf:float,source:any,size:tuple)->list[list]:
+        self.size=size
+        self.conf=conf
+        self.video_capture = cv2.VideoCapture(source)
+        self.model = self.load_model(YOLO(path))  #путь до мoдели
+
+    def load_model(self, model):
+        model.fuse()                      #ускорение работы модели
+        return model
+
+    def __del__(self): self.video_capture.release()
+
+    def get_frame(self):
+        success, frame = self.video_capture.read()
+        if not success: return None
+        
+        results = self.model.predict(frame, conf=self.conf, imgsz=self.size)
+        processed_frame = results[0].plot()
+
+        masks_dict=[result.names for result in results][0] #словарь структуры dataсета
+        xyxys=[result.boxes.cpu().numpy().xyxy for result in results][0] #xyxy параметры бокса(верхний левый, правый нижний по сетке)
+        mask_ids=[result.boxes.cpu().numpy().cls.astype(int).tolist() for result in results][0] #itr->cpu->nparray->индексы->список
+        masks=[masks_dict[itr] for itr in mask_ids] #список лиц по индексу
+
+
+        ret, jpeg = cv2.imencode('.jpg', processed_frame)
+        return jpeg.tobytes()
+
+
+def gen(camera):
+    while True:
+        frame = camera.get_frame()
+        if frame:
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+        else:
+            break

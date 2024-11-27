@@ -1,0 +1,17 @@
+def main_field(model: any, size: int, source: any, conf_: float) -> None: #270ms
+    cap = cv2.VideoCapture(source)  
+    try:
+        while True: 
+            ret, frame = cap.read()
+            if not ret: break
+            results = model.track(frame, persist=True, tracker='bytetrack.yaml', conf=conf_, imgsz=size) 
+            dict_=[result.names for result in results][0]
+            xyxys=[result.boxes.cpu().numpy().xyxy for result in results] #xyxy параметры бокса(верхний левый, правый нижний по сетке)
+            conf=[result.boxes.cpu().numpy().conf for result in results][0] #conf model levels
+            cls_ids=[result.boxes.cpu().numpy().cls.astype(int).tolist() for result in results][0] #itr->cpu->nparray->индексы->список
+            masks_output=[dict_[itr] for itr in cls_ids] #список лиц по индексу
+            db_output=[check_(local_list,str(itr)) for itr in masks_output] #вывод из базы(google sheets)
+            pt(xyxys[0]) #данные по запросу в БД
+            cv2.imshow("______________________________________", results[0].plot()) #окно вывода
+            if cv2.waitKey(1) & 0xFF == ord('q'): break
+    finally: cv2.destroyAllWindows()

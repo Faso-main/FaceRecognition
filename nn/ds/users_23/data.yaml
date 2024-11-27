@@ -1,0 +1,13 @@
+train: C:\IT_\Py\Freg\nn\data_sets\users_23\train\images
+val: C:\IT_\Py\Freg\nn\data_sets\users_23\valid\images
+test: C:\IT_\Py\Freg\nn\data_sets\users_23\test\images
+
+nc: 24
+names: ['0_Galkin_GD', '10_Kamaldinova_ZF', '11_Chuvakov_AV', '12_Bukanova_UV', '13_Pugachev_AI', '14_Podolskay_EA', '15_Martemianov_BV', '16_Dalshina_US', '17_Orlov_SP', '18_Portnov_KV', '19_Efimushkina_NV', '1_Emelin_AP', '20_Kosareva_EA', '21_Gavlievskiy_SL', '22_Panukova_EV', '23_Tugashev_AA', '2_Kiychenkov_IA', '3_Sikachev_AV', '4_Kolesnikov_AV', '5_Eromasova_LV', '6_Podolskay_MU', '7_Kashrcheva_YD', '8_Bogatireva_IM', '9_Prohorova_OV']
+
+roboflow:
+  workspace: gengas-rzziv
+  project: face-user
+  version: 5
+  license: Private
+  url: https://universe.roboflow.com/gengas-rzziv/face-user/dataset/5
