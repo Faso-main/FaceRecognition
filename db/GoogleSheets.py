@@ -2,8 +2,9 @@ import gspread, time, os
 
 #https://docs.google.com/spreadsheets/d/19FnmST_Ea0lyzBS8Qg5Y3KjT5i1XQFaJaPpgdArDmI0/edit
 key_path=os.path.join('db','Key.json')
+static_key='C:\IT\Py\Key.json'
 
-secret_key = gspread.service_account(key_path) #подключение в json файлу библиотеки
+secret_key = gspread.service_account(static_key) #подключение в json файлу библиотеки
 sh = secret_key.open("Data") #открытие таблицы с таким-то названием
 sh1=sh.get_worksheet(0) #определение рабочей страницы в таблице
 
