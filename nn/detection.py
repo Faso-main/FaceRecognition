@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 import cv2, numpy
-from db.main import check_, local_list
+from db.GoogleSheets import check_, local_list
 from pprint import pprint as pt
 
 class MainField:

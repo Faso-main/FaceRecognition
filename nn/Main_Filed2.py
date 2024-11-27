@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2, onnx, onnxoptimizer,numpy, time, threading
 #import torch.onnx
 import torchvision.models as models
-from db.main import *
+from db.GoogleSheets import *
 from pprint import pprint as pt
 
 

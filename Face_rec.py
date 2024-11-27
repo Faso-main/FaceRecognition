@@ -1,4 +1,4 @@
-from nn.detection import MainField,init_model
+from nn.Detection import MainField,init_model
 import os
 
 
@@ -10,7 +10,7 @@ def main():
     #train_(init_model('nn/models/yolov8s.pt'),'nn/data_sets/users_23/data.yaml',50,256)
     #conv_pt_onnx(init_model('nn/models/yolov8s.pt'))
     #conv_pt_engine(init_model('nn/models/yolov8s.pt'))
-    MainField(init_model(model_path),256,0,0.4)()
+    MainField(init_model(model_path),256,0,0.5)()
     #onnx_run2('nn/models/yolov8s.onnx')
 
 
