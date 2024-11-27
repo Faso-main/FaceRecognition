@@ -1,7 +1,7 @@
 import gspread, time, os
 
 #https://docs.google.com/spreadsheets/d/19FnmST_Ea0lyzBS8Qg5Y3KjT5i1XQFaJaPpgdArDmI0/edit
-key_path=os.path.join('tasks','view_tasks','db','Key.json')
+key_path=os.path.join('db','Key.json')
 
 secret_key = gspread.service_account(key_path) #подключение в json файлу библиотеки
 sh = secret_key.open("Data") #открытие таблицы с таким-то названием
