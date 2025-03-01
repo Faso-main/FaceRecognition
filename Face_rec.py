@@ -1,4 +1,4 @@
-from nn.Detection import MainField,init_model
+from nn.detection import MainField,init_model
 import os
 
 
